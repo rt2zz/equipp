@@ -41,3 +41,10 @@ function dummyHandler(request, remand){
 }
 ```
 
+##Goals
+Configuration based routing
+Not to solve application specific problems such as authentication or caching
+
+
+
+
