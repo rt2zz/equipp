@@ -1,0 +1,12 @@
+{
+  "name": "equipt",
+  "version": "0.0.1",
+  "description": "hapi inspired server framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Zack Story <zstory@ucla.edu>",
+  "license": "ISC"
+}
