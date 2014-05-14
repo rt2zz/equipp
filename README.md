@@ -1,4 +1,4 @@
-equipt
+equipp
 ======
 
 node.js server framework inspired by Hapi.
