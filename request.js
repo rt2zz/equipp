@@ -1,29 +1,31 @@
-module.exports = Request
 
 var _ = require('lodash')
+
 /**
   * Equip request object.
   * @TODO fill out. Compare to express/koa/hapi etc.
   **/
-function Request(request, response){
+function Request(request, response, keys){
   var self = this
   this.raw = {request: request, response: response}
   this.pre = {}
-  this._replied = false
-  this.reply = createReply()function(data){
+  this.keys = keys
 
-    if(this._replied){
-      throw new Error('Replied Twice')
+  //@TODO make thism ore elegant with classes or closures...
+  this.reply = function(data){
+    self.reply.data = data
+    if(typeof self.reply.remand == 'function'){
+      self.reply.remand(data)
+      self.reply.remand = null
     }
-    self.raw.response.end(data)
-    this._replied = true
   }
+  this.reply.remand = null
+
 }
 
-function createReply(){
-  return new Re
+Request.prototype.error = function(type){
+  console.log('ERROR', type)
+  this.raw.response.end('Error: ', type)
 }
 
-function Reply(data){
-  if(this instanceof Reply)
-}
+module.exports = Request

@@ -4,25 +4,25 @@ function Plugin(path, server){
   this._pluginPath = path
   this.server = server
   this.get = server.get
-  this._pre = []
-  this._post = []
+  this._preHandler = []
+  this._postHandler = []
 }
 
 Plugin.prototype.share = function(object){
-  var info = require(this._pluginPath+'/package.json')
-  this.server._pluginShare[info.name] = object
+  // var info = require(this._pluginPath+'/package.json')
+  // this.server._pluginShare[info.name] = object
 }
 
-//@TODO cleanup
+//@TODO implement dependency
 Plugin.prototype.dependency = function(name){
-  if(this.server._plugins.names.indexOf(name) > -1){
-
-  }
-  else{
-    throw new Error('plugin dependency not met!')
-  }
+  // if(this.server._plugins.names.indexOf(name) > -1){
+  //
+  // }
+  // else{
+  //   throw new Error('plugin dependency not met!')
+  // }
 }
 
-Plugin.prototype.pre = function(pre){
-  this._pre.push(pre)
+Plugin.prototype.preHandler = function(pre){
+  this._preHandler.push(pre)
 }

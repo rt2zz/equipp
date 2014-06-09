@@ -1,10 +1,10 @@
-module.exports = new Equip()
+module.exports = new Eqi()
 
 var Server = require('./server.js')
 
-function Equip(){
+function Eqi(){
 }
 
-Equip.prototype.createServer = function(port){
+Eqi.prototype.createServer = function(port){
   return new Server(port)
 }
