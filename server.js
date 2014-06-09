@@ -13,6 +13,8 @@ var Plugin = require('./plugin.js')
 var Request = require('./request.js')
 var RemandChain = require('./chain.js')
 
+var randomstring = require('randomstring')
+
 /**
   * Server Class
   **/
@@ -28,6 +30,8 @@ function Server(config){
   this.dir = path.resolve(__dirname+'/../../')
   this._pluginShare = {}
   this._requestedPlugins = []
+  this.services = {}
+  this._servicesMeta = {}
 
   this._pipePoints = {}
   this._pipePointsOrder = []
@@ -126,13 +130,14 @@ Server.prototype.requestHandler = function(request, response){
 
 Server.prototype.plugin = function(module, ops){
   var ops = ops || {}
-  this._requestedPlugins.push({module: module, name: 'tbd', ops: ops})
+  //@todo make name deteministic... or get actual module names
+  this._requestedPlugins.push({module: module, name: randomstring.generate(8), ops: ops})
 }
 
 Server.prototype.requirePlugins = function(next){
   var plugins = this._requestedPlugins
   var self = this
-  async.map(plugins, self.requirePlugin, function(err, results){
+  async.map(plugins, self.requirePlugin.bind(self), function(err, results){
 
     //@TODO add error handling and cleanup
     async.map(self.pluginLoader, function(loader, next){
@@ -148,8 +153,10 @@ Server.prototype.requirePlugins = function(next){
 }
 
 Server.prototype.requirePlugin = function(config, next){
+  console.log('this.services', this.services)
   config.plugin = new Plugin(config.name, this)
-  config.module.plugin(config.plugin, config.ops, next)
+  if(config.module.plugin) config.module.plugin(config.plugin, config.ops, next)
+  else next()
 }
 
 Server.prototype.get = function(name){
